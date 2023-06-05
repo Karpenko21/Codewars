@@ -90,7 +90,7 @@ let deepCopyStudents = students.map(s => ({...s}))
 let deepCopySuperUser = {...superUser, friends: superUser.friends.map(s => ({...s}))}
 
 //4. Отсортируйте students по успеваемости (лучший идёт первым)(sort)
-let sortedByScores = students.sort((a, b) => b.scores - a.scores)
+let sortedByScores = [...students].sort((a, b) => b.scores - a.scores)
 console.log(sortedByScores);
 
 //5. Сформируйте массив студентов, у которых 100 и более баллов (filter)
@@ -168,7 +168,7 @@ console.log(scoresSum)
 // за исключением собственного имени студента. Т.е. в друзьях у Боба Боба быть не должно.
 
 const addFriends = (students) => {
-    let arrayOfFriends = students.map(s => s.name)
+    let arrayOfFriends = [...students].map(s => s.name)
     return students.map(s => {
         return (
             {
@@ -187,29 +187,20 @@ console.log(addFriends(students));
 // getBestStudents(students, 3) => [{...}, {...}, {...}]
 // getBestStudents(students, 10) => [{}, {}, ...., {}, null, null, null, null ]
 
-function getBestStudents(studentsArray, numberOfBestStudents) {
-    if (numberOfBestStudents === undefined) {
-        let bestStudentScores = studentsArray[0].scores
-        let indexOfStudentBestStudent = 0
-        for (let i = 1; i < studentsArray.length; i++) {
-            if (studentsArray[i].scores > bestStudentScores) {
-                bestStudentScores = studentsArray[i].scores
-                indexOfStudentBestStudent = i
-            }
-        }
-        return studentsArray[indexOfStudentBestStudent]
+function getBestStudents(arr, number = 0) {
+    let sortedArray = [...arr].sort((a, b) => b.scores - a.scores)
+    if (number === 0 ) {
+        return arr[0]
     } else {
-        let newArray =  [] //new Array(numberOfBestStudents).fill(null);
-        let sortedArray = studentsArray.sort((a, b) => b.scores - a.scores)
-        for (let index = 0; index < numberOfBestStudents; index++) {
-            newArray.push(sortedArray[index])
+        let newArray =  []
+        for (let i = 0; i < number; i++) {
+            newArray[i] = arr[i] || null
         }
         return newArray
     }
 }
 
+
 console.log(getBestStudents(students))
 console.log(getBestStudents(students, 3))
 console.log(getBestStudents(students, 10))
-
-
