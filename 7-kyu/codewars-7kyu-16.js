@@ -1,11 +1,11 @@
 export function findNextSquare(sq) {
+    let res = sq + 1
     if (Math.sqrt(sq) % 1 !== 0) {
         return  -1
     } else {
-        let i = sq
-        while (Math.sqrt(i) % 1 === 0){
-            i++
+        while (Math.sqrt(res) % 1 !== 0){
+            res++
         }
+        return res
     }
- return i
 }
